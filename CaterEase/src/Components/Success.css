@@ -1,0 +1,32 @@
+.success-container {
+  text-align: center;
+  margin-top: 60px;
+  font-family: Arial, sans-serif;
+}
+
+.success-container h2 {
+  font-size: 28px;
+  margin-bottom: 15px;
+}
+
+.success-container p {
+  font-size: 16px;
+  margin: 8px 0;
+}
+
+.home-btn {
+  margin-top: 20px;
+  padding: 10px 20px;
+  border: none;
+  background: #a54d4d;
+  color: white;
+  border-radius: 8px;
+  cursor: pointer;
+  font-size: 15px;
+  font-weight: 600;
+  transition: 0.2s ease;
+}
+
+.home-btn:hover {
+  opacity: 0.85;
+}

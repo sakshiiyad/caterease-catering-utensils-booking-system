@@ -1,0 +1,87 @@
+/* full section with background image */
+.home {
+  min-height: 90vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 40px 20px;
+
+  background-image: url("../assets/catereaseHomeimg.jpg"); /* <-- your image */
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+
+  /* overlay for better text readability */
+  position: relative;
+}
+
+.home::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.45);
+}
+
+.hero {
+  position: relative;
+  color: #fff;
+  max-width: 800px;
+  text-align: center;
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 22px;
+}
+
+.primary-btn {
+  padding: 10px 22px;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+}
+.hero-box {
+  max-width: 750px;
+  text-align: center;
+  color: #fff;
+
+  /* glassmorphism */
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+
+  border-radius: 14px;
+  padding: 24px 28px;
+  border: 1px solid rgba(255, 255, 255, 0.25);
+
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
+}
+
+.title {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 12px;
+}
+
+.subtitle {
+  font-size: 16px;
+  margin-bottom: 22px;
+}
+
+.primary-btn {
+  padding: 10px 22px;
+  border-radius: 6px;
+  background: #3b82f6;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}

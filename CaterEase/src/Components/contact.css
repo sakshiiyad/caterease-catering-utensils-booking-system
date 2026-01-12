@@ -1,0 +1,97 @@
+.contact-page {
+  min-height: 90vh;
+  padding: 36px 20px 60px;
+  background: #f8fafc;
+}
+
+/* Header */
+.contact-header {
+  text-align: center;
+  margin-bottom: 26px;
+}
+
+.contact-header h1 {
+  font-size: 30px;
+  font-weight: 800;
+}
+
+.contact-header p {
+  color: #6b7280;
+  margin-top: 6px;
+}
+
+/* Grid layout */
+.contact-grid {
+  max-width: 1000px;
+  margin: 0 auto;
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 18px;
+}
+
+/* Cards */
+.contact-card,
+.info-card {
+  background: #ffffff;
+  border-radius: 14px;
+  padding: 18px 18px 20px;
+  border: 1px solid #e5e7eb;
+  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.05);
+}
+
+.info-card p {
+  margin-top: 10px;
+}
+
+/* Form */
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.contact-form input,
+.contact-form select,
+.contact-form textarea {
+  padding: 8px 10px;
+  border: 1px solid #d1d5db;
+  border-radius: 8px;
+  outline: none;
+}
+
+.contact-form input:focus,
+.contact-form textarea:focus {
+  border-color: #2563eb;
+}
+
+/* Button */
+.contact-btn {
+  margin-top: 4px;
+  padding: 9px 14px;
+  border-radius: 8px;
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.success-box {
+  padding: 8px 10px;
+  margin-bottom: 10px;
+  border-radius: 6px;
+  background: #ecfdf5;
+  color: #065f46;
+}
+
+.error {
+  font-size: 12px;
+  color: #dc2626;
+}
+
+/* Responsive */
+@media (max-width: 850px) {
+  .contact-grid {
+    grid-template-columns: 1fr;
+  }
+}

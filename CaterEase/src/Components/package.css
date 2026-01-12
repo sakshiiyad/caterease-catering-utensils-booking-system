@@ -1,0 +1,25 @@
+.packages-header {
+  text-align: center;
+  margin-bottom: 16px;
+}
+
+.packages-header h1 {
+  font-size: 32px;
+  font-weight: 800;
+}
+
+.subtitle {
+  color: #6b7280;
+}
+.filters {
+  max-width: 1050px;
+  margin: 0 auto 18px;
+  display: flex;
+  gap: 10px;
+}
+
+.filters select {
+  padding: 8px;
+  border-radius: 8px;
+  border: 1px solid #d1d5db;
+}
