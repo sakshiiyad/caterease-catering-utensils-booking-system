@@ -10,6 +10,13 @@ import Package from './Components/Package'
 import Rent from './Components/Rent'
 import RentalCheckout from './Components/RentalCheckout'
 import SucessPage from './Components/SucessPage'
+import Login from './Components/Login'
+import Signup from './Components/Signup'
+import ProtectedRoute from './Components/ProctectedRoute'
+import AdminDashboard from './AdminDashboard'
+import MyBookings from './Components/MyBookings'
+
+
 
 const App = () => {
   return (
@@ -17,6 +24,7 @@ const App = () => {
       <Navbar/>
 
       <Routes>
+       {/* public routes */}
         <Route path="/" element={<Home/>}/>
         <Route path="/aboutus" element={<Aboutus/>}/>
         <Route path="/services" element={<Services/>}/>
@@ -26,7 +34,30 @@ const App = () => {
         <Route path='/rent/checkout' element={<RentalCheckout/>}/>
         <Route path='/checkout/success' element={<SucessPage/>}/>
 
+        {/* Auth routes */}
+        <Route path='/login' element={<Login/>}/>
+        <Route path='/signup' element={<Signup/>}/>
+
+          {/* customer routes */}
+          <Route path='/my-bookings'
+          element={
+            <ProtectedRoute allowedRoles={["customer"]}>
+              <MyBookings/>
+            </ProtectedRoute>
+          }
+          />
           
+          {/* admin route */}
+          <Route path='/admin'
+          element={
+            <ProtectedRoute allowedRoles={["admin"]}>
+              <AdminDashboard/>
+            </ProtectedRoute>
+          }
+          />
+        
+
+
       </Routes>
     </div>
   )
