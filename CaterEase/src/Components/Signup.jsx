@@ -9,7 +9,7 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "customer", // default
+    role: "customer", 
   });
 
   const handleChange = (e) => {
@@ -22,14 +22,12 @@ const Signup = () => {
   const handleSignup = (e) => {
     e.preventDefault();
 
-    // ✅ simple validations
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
 
-    // ✅ FRONTEND MOCK SIGNUP
-    // Later you will call backend API here.
+    
     alert("Signup successful! Please login now.");
 
     navigate("/login");
@@ -39,7 +37,7 @@ const Signup = () => {
     <div style={styles.page}>
       <div style={styles.card}>
         <h2 style={styles.title}>Signup</h2>
-        <p style={styles.subtitle}>Create your Keter Ease account 🚀</p>
+        <p style={styles.subtitle}>Create your CaterEase account</p>
 
         <form onSubmit={handleSignup} style={styles.form}>
           <div style={styles.inputGroup}>

@@ -1,16 +1,15 @@
 import { Link, NavLink, useNavigate } from "react-router-dom";
 import "./Navbar.css";
 import { clearAuth, getRole, isLoggedIn } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 export default function Navbar() {
-  const navigate = useNavigate();
+  
 
-  const loggedIn = isLoggedIn();
-  const role = getRole();
+  const{isAuth,role,logout}=useAuth();
 
   const handlelogout = () => {
-    clearAuth();
-    navigate("/login");
+   logout();
   };
 
   return (
@@ -25,11 +24,11 @@ export default function Navbar() {
       </div>
 
       {/*  role based links */}
-      {loggedIn && role === "admin" && <Link to="/admin">Dashboard</Link>}
-      {loggedIn && role === "customer" && <Link to="/my-bookings">My Bookings</Link>}
+      {isAuth && role === "admin" && <Link to="/admin">Dashboard</Link>}
+      {isAuth && role === "customer" && <Link to="/my-bookings">My Bookings</Link>}
 
       <div className="actions">
-        {!loggedIn ? (
+        {!isAuth ? (
           <>
             <Link to="/login">
               <button className="login-btn">Login</button>

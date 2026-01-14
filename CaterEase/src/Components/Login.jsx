@@ -1,9 +1,11 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setAuth } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
 
 const Login = () => {
   const navigate = useNavigate();
+  const{login}=useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -25,8 +27,8 @@ const Login = () => {
     const role = email === "admin@gmail.com" ? "admin" : "customer";
 
     const token = "mock_token_123"; 
-    setAuth({ token, role });
-
+    setAuth( token, role );
+      login(role)
     
     if (role === "admin") navigate("/admin");
     else navigate("/my-bookings");
