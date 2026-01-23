@@ -9,7 +9,7 @@ const Signup = () => {
     email: "",
     password: "",
     confirmPassword: "",
-    role: "customer", 
+   
   });
 
   const handleChange = (e) => {
@@ -66,18 +66,7 @@ const Signup = () => {
             />
           </div>
 
-          <div style={styles.inputGroup}>
-            <label style={styles.label}>Role</label>
-            <select
-              name="role"
-              value={formData.role}
-              onChange={handleChange}
-              style={styles.input}
-            >
-              <option value="customer">Customer</option>
-              <option value="admin">Admin</option>
-            </select>
-          </div>
+          
 
           <div style={styles.inputGroup}>
             <label style={styles.label}>Password</label>
