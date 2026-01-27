@@ -44,7 +44,8 @@ import jwt from 'jsonwebtoken'
             user:{
                 id:NewUser._id,
                 name:NewUser.name,
-                email:NewUser.email
+                email:NewUser.email,
+                role:NewUser.role
             },
             token,
         })
@@ -99,7 +100,9 @@ export const Login=async(req,res)=>{
                 email:user.email,
                 role:user.role
 
-            }
+
+            },
+            token
         })
 
 

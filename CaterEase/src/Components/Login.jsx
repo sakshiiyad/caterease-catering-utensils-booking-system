@@ -1,11 +1,12 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { setAuth } from "../utils/auth";
 import { useAuth } from "../context/AuthContext";
+import { toast } from "react-toastify";
 
 const Login = () => {
   const navigate = useNavigate();
-  const{login}=useAuth();
+  const{login, isAuth}=useAuth();
 
   const [formData, setFormData] = useState({
     email: "",
@@ -18,20 +19,50 @@ const Login = () => {
       [e.target.name]: e.target.value,
     }));
   };
+  useEffect(()=>{
+    if(isAuth){
+      navigate("/my-bookings");
+    }
 
-  const handleLogin = (e) => {
+  },[isAuth])
+
+  const handleLogin =async (e) => {
     e.preventDefault();
-
+    try{
+      const res=await fetch(`http://localhost:5000/auth/login`,{
+        method:"POST",
+        headers:{"content-Type":"application/json"},
+        body:JSON.stringify({
+         email: formData.email,
+         password:formData.password
+        })
+      })
+      const data=await res.json();
+      console.log(data);
+      if(!data.success){
+        toast.error(data.message)
+      }
+      else{
+        toast.success("login successfull")
+      //save the token and role
+      const token=data.token;
+      const role=data.user.role
+      setAuth({token,role});
+      login(role)//update the context
+      if(role==="admin"){
+        navigate("/admin");
+      }
+      else{
+        navigate("/my-bookings");
+      }
+      }
+    }catch(error){
+      console.log(error.message)
+      toast.error("Interal server error")
+    }
    
-    const email = formData.email.trim();
-    const role = email === "admin@gmail.com" ? "admin" : "customer";
-
-    const token = "mock_token_123"; 
-    setAuth( token, role );
-      login(role)
+   
     
-    if (role === "admin") navigate("/admin");
-    else navigate("/my-bookings");
   };
 
   return (

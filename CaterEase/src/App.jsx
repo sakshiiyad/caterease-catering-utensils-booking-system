@@ -1,5 +1,8 @@
 import React from "react";
 import { Routes, Route } from "react-router-dom";
+import { ToastContainer} from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
+
 
 import PublicLayout from "./layouts/PublicLayout";
 import AdminLayout from "./layouts/AdminLayout";
@@ -22,6 +25,8 @@ import Inventory from "./Admin/pages/Inventory";
 
 const App = () => {
   return (
+    <>
+    <ToastContainer/>
     <Routes>
       {/* ✅ Public Layout Routes */}
       <Route element={<PublicLayout />}>
@@ -61,6 +66,7 @@ const App = () => {
         <Route path="/admin/inventory" element={<Inventory/>}/>
       </Route>
     </Routes>
+    </>
   );
 };
 

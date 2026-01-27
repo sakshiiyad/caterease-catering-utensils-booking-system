@@ -10,8 +10,6 @@ const UserSchema=new Schema({
     email:{
         type:String,
         lowercase:true,
-     
-       
         required:[true,"email is required"],
         
     },

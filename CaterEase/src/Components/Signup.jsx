@@ -1,8 +1,14 @@
 import React, { useState } from "react";
 import { Link, useNavigate } from "react-router-dom";
+import {toast} from "react-toastify";
+import { setAuth } from "../utils/auth";
+import { useAuth } from "../context/AuthContext";
+
 
 const Signup = () => {
+  const {login}=useAuth()
   const navigate = useNavigate();
+  const API_URL=`http://localhost:5000/auth/signup`;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -19,18 +25,48 @@ const Signup = () => {
     }));
   };
 
-  const handleSignup = (e) => {
+  const handleSignup = async(e) => {
     e.preventDefault();
+    // const {name,email,password}=formData
 
     if (formData.password !== formData.confirmPassword) {
       alert("Passwords do not match!");
       return;
     }
+    const response=await fetch(API_URL,{
+      method:"POST",
+      headers:{"content-Type":"application/json"
+      },
+      body:JSON.stringify({
+        name:formData.name,
+        email:formData.email,
+        password:formData.password
+      })
+    }
+    
+    )
+    const data=await response.json();
+    console.log("working")
+    console.log(data)
+    if(data.success){
+    toast.success("signup successfully")
+    const token=data.token;
+    const role=data.user.role
+    setAuth({token,role})
+    login(role)
+    navigate(role==="admin"?"/admin":"/my-bookings")
+    console.log("token saved")
+    }
+    else{
+      toast.error("Something went wrong")
+    }
+  
+
 
     
-    alert("Signup successful! Please login now.");
+    
 
-    navigate("/login");
+    
   };
 
   return (
