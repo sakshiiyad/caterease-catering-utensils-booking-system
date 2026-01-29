@@ -3,7 +3,7 @@ import dotenv from 'dotenv';
 import cors from 'cors';
 import connectDB from './src/config/db.js';
 import authRoutes from './src/routes/publicRoutes/authRoutes.js'
-import userRoutes from './src/routes/privateRoutes/userRoutes.js'
+import bookingRoute from './src/routes/privateRoutes/bookingRoutes.js'
 
 dotenv.config();
 
@@ -17,7 +17,7 @@ connectDB();
 app.use('/auth', authRoutes)
 
 // Private/Protected routes
-app.use('/', userRoutes)
+app.use('/api',bookingRoute)
 
 const PORT=process.env.PORT||5000;
 

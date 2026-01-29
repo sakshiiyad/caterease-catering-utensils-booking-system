@@ -1,9 +1,10 @@
-
+import Users from '../model/Users.js'
 import jwt from'jsonwebtoken'
-export const ProtectMiddleware=(req,res,next)=>{
+export const ProtectMiddleware=async(req,res,next)=>{
     try{
         const authHeader=req.headers.authorization;
         //check if headers exists or not 
+        console.log(authHeader)
         if(!authHeader){
             return res.status(401).json({
                 success:false,
@@ -12,7 +13,15 @@ export const ProtectMiddleware=(req,res,next)=>{
         }
         //verify token
         const decodedtoken=jwt.verify(authHeader,process.env.JWT_SECRET);
-        req.user=decodedtoken.id
+        console.log(decodedtoken.id)
+        const user=await Users.findById(decodedtoken.id).select("-password");
+        if(!user){
+        return res.status(401).json({
+        success: false,
+        message: "User not found",
+      });
+        }
+        req.user=user;
         next();
         
 
