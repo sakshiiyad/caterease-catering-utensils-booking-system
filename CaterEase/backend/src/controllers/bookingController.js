@@ -75,3 +75,24 @@ export const createBooking=async(req,res)=>{
         })
     }
 }
+
+//show bookings
+
+export const getMyBooking=async(req,res)=>{
+    try{
+        const userId=req.user._id;
+        const bookings=await bookingModel.find({user:userId}).sort({createdAt:-1});
+        return res.status(200).json({
+            success:true,
+           count:bookings.length,
+           bookings,
+        })
+
+    }catch(error){
+        return res.status(500).json({
+            success:false,
+            message:"failed to fetch bookings",
+            error:error.message
+        })
+    }
+}
