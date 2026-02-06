@@ -22,13 +22,14 @@ import ProtectedRoute from "./Components/ProctectedRoute";
 import AdminDashboard from "./Admin/pages/AdminDashboard";
 import MyBookings from "./Components/MyBookings";
 import Inventory from "./Admin/pages/Inventory";
+import PackageCheckoutPage from "./Components/PackageCheckoutPage";
 
 const App = () => {
   return (
     <>
     <ToastContainer/>
     <Routes>
-      {/* ✅ Public Layout Routes */}
+      {/*  Public Layout Routes */}
       <Route element={<PublicLayout />}>
         <Route path="/" element={<Home />} />
         <Route path="/aboutus" element={<Aboutus />} />
@@ -38,6 +39,7 @@ const App = () => {
         <Route path="/rent" element={<Rent />} />
         <Route path="/rent/checkout" element={<RentalCheckout />} />
         <Route path="/checkout/success" element={<SucessPage />} />
+        <Route path="/packageCheckoutPage" element={<PackageCheckoutPage/> } />
 
         {/* Auth */}
         <Route path="/login" element={<Login />} />
@@ -54,7 +56,7 @@ const App = () => {
         />
       </Route>
 
-      {/* ✅ Admin Layout Routes */}
+      {/*  Admin Layout Routes */}
       <Route
         element={
           <ProtectedRoute allowedRoles={["admin"]}>

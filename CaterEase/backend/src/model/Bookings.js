@@ -13,7 +13,8 @@ const UtensilsSchema=new Schema({
     pricePerDay:{
         type:Number,
         required:true,
-    },
+    }
+    
 },
 {_id:false} //dont want mongodb id
 );
@@ -54,6 +55,23 @@ const bookingSchema=new Schema(
             utensils:[UtensilsSchema],
         },
         utensilsDetails: {
+            name:{
+                type:String,
+                required:true,
+            },
+            address: {
+                type: String,
+                required: true,
+            },
+            phone:{
+                type:Number,
+                required:true,
+            },
+            delivery:{
+                type:String,
+                enum:["pickup","delivery"],
+                default:"pickup",
+            },
             durationDays: {
             type:Number,
             min: 1,

@@ -38,7 +38,7 @@ export const createBooking=async(req,res)=>{
         }
     }
     else  if(bookingType==="utensils"){
-        const{durationDays,items}=req.body;
+        const{name,phone,address,delivery,durationDays,items}=req.body;
         if(!durationDays||!items){
             return res.status(400).json({
                 sucess:false,
@@ -46,6 +46,10 @@ export const createBooking=async(req,res)=>{
             })
         }
         BookingData.utensilsDetails={
+            name,
+            phone,
+            address,
+            delivery,
             durationDays,
             items
         }

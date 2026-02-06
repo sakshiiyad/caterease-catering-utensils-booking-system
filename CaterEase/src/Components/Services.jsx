@@ -39,7 +39,9 @@ const Services = () => {
 
           <button
             className="service-btn"
-            onClick={() => navigate("/packages")}
+            onClick={() => navigate("/packages",{
+              state:{bookingType:"catering"}
+            })}
           >
             View Catering Packages →
           </button>
@@ -63,7 +65,9 @@ const Services = () => {
 
           <button
             className="service-btn secondary"
-            onClick={() => navigate("/rent")}
+            onClick={() => navigate("/rent",{
+              state:{bookingType:"utensils"}
+            })}
           >
             Rent Utensils →
           </button>

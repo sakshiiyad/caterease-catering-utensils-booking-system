@@ -1,8 +1,11 @@
 import React, { useState } from "react";
 import { useLocation, useNavigate } from "react-router-dom";
 import "./RentalCheckout.css";
+import { getToken } from "../utils/auth";
+import { toast } from "react-toastify";
 
 const RentalCheckout = () => {
+  
   const [form, setform] = useState({
     eventDate: "",
     duration: 1,
@@ -16,6 +19,7 @@ const RentalCheckout = () => {
 
   const { state } = useLocation();
   const cart = state?.cart || [];
+  console.log("consoling log cart",cart)
 
   const navigate = useNavigate();
 
@@ -27,9 +31,13 @@ const RentalCheckout = () => {
       [name]: name === "duration" ? Number(value) : value,
     });
   };
+const Token=getToken();
 
-  const handleConfirm = () => {
-    if (cart.length === 0) {
+
+  const handleConfirm =async (e) => {
+   try{
+      e.preventDefault();
+     if (cart.length === 0) {
       alert("Cart is empty. Please add items first.");
       navigate("/rent/cart");
       return;
@@ -41,21 +49,50 @@ const RentalCheckout = () => {
     }
     setloading(true)
 
-    // Fake Booking ID
+    //API call
     
-    setTimeout(()=>{
-      const bookingId = "RENT" + Math.floor(Math.random() * 10000);
-      setloading(false);
-      navigate("/checkout/success", {
-      state: {
-        bookingId,
-        form,
-        cart,
+    const res=await fetch(`http://localhost:5000/api/bookings`,{
+      method:"POST",
+      headers:{"content-Type":"application/json",
+      Authorization:`${Token}`
       },
-    });
-  
+      body:JSON.stringify({
+        bookingType:"utensils",
+        eventDate:form.eventDate,
+        name:form.name,
+        phone:form.phone,
+        address:form.address,
+        delivery:form.delivery,
+        durationDays:form.duration,
+        items:state?.cart.map((item)=>({
+          name:item.name,
+          qty:item.qty,
+          pricePerDay:item.price
+        }))
+          
+        
+      })
 
-    },1500);
+  });
+
+  const data=await res.json();
+  console.log(data);
+  if(!data.success){
+    toast.error("Something went wrong");
+    console.log(data.message);
+    return;
+    
+  }
+  toast.success("Booking created successfully");
+  navigate("/my-bookings");
+  
+    
+    
+
+   }catch(error){
+    toast.error("Internal Server error")
+
+   }
   }
   // total price (if you have price in item)
   const cartTotal = cart.reduce((sum, item) => {

@@ -1,6 +1,7 @@
 import React from "react";
 
 const MyBookingTable = ({ data = [], type }) => {
+  console.log("dekho",data);
   return (
     <>
       <style>{`
@@ -132,22 +133,22 @@ const MyBookingTable = ({ data = [], type }) => {
               ) : (
                 data.map((booking) => (
                   <tr key={booking.id}>
-                    <td>{booking.id}</td>
+                    <td>{booking._id}</td>
                     <td>{booking.eventDate}</td>
 
                     {type === "catering" ? (
-                      <td>{booking.packageName}</td>
+                      <td>{booking.cateringDetails?.packageName}</td>
                     ) : (
-                      <td>{booking.durationDays}</td>
+                      <td>{booking.utensilsDetails?.durationDays}</td>
                     )}
 
-                    {type === "catering" && <td>{booking.guests}</td>}
+                    {type === "catering" && <td>{booking.cateringDetails?.guests}</td>}
 
                     <td>₹{booking.totalPrice}</td>
 
                     <td>
                       <span className={`status ${booking.status?.toLowerCase()}`}>
-                        {booking.status}
+                        {booking.Status}
                       </span>
                     </td>
 
@@ -155,7 +156,7 @@ const MyBookingTable = ({ data = [], type }) => {
 
                     {type === "catering" && (
                       <td>
-                        {booking.utensils?.map((u, index) => (
+                        {booking.cateringDetails?.utensils.map((u, index) => (
                           <div key={index} className="item-line">
                             {u.name} ({u.qty})
                           </div>
@@ -165,7 +166,7 @@ const MyBookingTable = ({ data = [], type }) => {
 
                     {type === "utensils" && (
                       <td>
-                        {booking.items?.map((item, index) => (
+                        {booking.utensilsDetails?.items?.map((item, index) => (
                           <div key={index} className="item-line">
                             {item.name} — {item.qty} × ₹{item.pricePerDay}/day
                           </div>
