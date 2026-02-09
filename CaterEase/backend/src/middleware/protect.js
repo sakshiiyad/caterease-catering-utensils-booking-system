@@ -1,6 +1,7 @@
 import Users from '../model/Users.js'
 import jwt from'jsonwebtoken'
 export const ProtectMiddleware=async(req,res,next)=>{
+    console.log("protect middleware called");
     try{
         const authHeader=req.headers.authorization;
         //check if headers exists or not 

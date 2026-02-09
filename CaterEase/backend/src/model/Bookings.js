@@ -31,6 +31,10 @@ const bookingSchema=new Schema(
             enum:["catering","utensils"],
             required:true,
         },
+        bookingNumber:{
+            type:String,
+            unique:true,
+        },
         eventDate:{
             type:Date,
             required:true,
@@ -41,7 +45,7 @@ const bookingSchema=new Schema(
         },
         Status:{
             type:String,
-             enum: ["Pending", "Confirmed", "Cancelled"],
+             enum: ["Pending", "Confirmed", "Rejected"],
              default:"Pending",
         },
         cateringDetails:{
@@ -57,15 +61,21 @@ const bookingSchema=new Schema(
         utensilsDetails: {
             name:{
                 type:String,
-                required:true,
+                required:function(){
+                    return this.bookingType==="utensils";
+                }
             },
             address: {
                 type: String,
-                required: true,
+                 required:function(){
+                    return this.bookingType==="utensils";
+                }
             },
             phone:{
                 type:Number,
-                required:true,
+                 required:function(){
+                    return this.bookingType==="utensils";
+                }
             },
             delivery:{
                 type:String,
@@ -84,6 +94,16 @@ const bookingSchema=new Schema(
     {
         timestamps:true,
     }
+    
 );
+bookingSchema.pre("save",async function () {
+  if (!this.bookingNumber) {
+    const rand = Math.floor(100 + Math.random() * 900);
+    this.bookingNumber = `BN-${Date.now().toString().slice(-6)}${rand}`;
+  }
+ 
+});
+
+
 const bookingModel=mongoose.model("Booking",bookingSchema);
 export default bookingModel;

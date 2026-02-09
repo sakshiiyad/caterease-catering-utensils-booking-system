@@ -133,7 +133,7 @@ const MyBookingTable = ({ data = [], type }) => {
               ) : (
                 data.map((booking) => (
                   <tr key={booking.id}>
-                    <td>{booking._id}</td>
+                    <td>{booking.bookingNumber}</td>
                     <td>{booking.eventDate}</td>
 
                     {type === "catering" ? (

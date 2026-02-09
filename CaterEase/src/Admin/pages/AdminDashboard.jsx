@@ -1,25 +1,62 @@
-import React, { useState } from 'react'
+import React, { useEffect, useState } from "react";
 
-import BookingTable from '../components/BookingTable'
-import Tabs from '../components/Tabs'
-import { cateringBookings, utensilBookings } from '../bookingdata'
+import BookingTable from "../components/BookingTable";
+import Tabs from "../components/Tabs";
+
+import { getToken } from "../../utils/auth";
+import { toast } from "react-toastify";
 
 const AdminDashboard = () => {
+  const [activeTab, setactiveTab] = useState("catering");
+  const[bookings,setbookings]=useState([]);
+  const [loading ,setloading]=useState(true);
 
-  const[activeTab,setactiveTab]=useState('catering')
+  const token=getToken();
+  //API call to fetch Bookings
+  useEffect(()=>{
+    async function getAllbookings(){
+      const res=await fetch(`http://localhost:5000/api/admin/bookings`,{
+        method:"GET",
+        headers:{"content-Type":"application/json",
+          Authorization:`${token}`
+        }
+      })
+      const data=await res.json();
+      console.log(data);
+      if(!data.success){
+        return toast.error("Something went wrong,booking couldn't be fetched");
+      }
+      setbookings(data.bookings);
 
-  const activeData =
-    activeTab === "catering" ? cateringBookings : utensilBookings;
 
-  const totalBookings = activeData.length;
-  const confirmedBookings = activeData.filter(
-    (b) => b.status === "Approved"
+     }
+
+     getAllbookings();
+
+  },[])
+
+
+
+
+
+  const totalBookings = bookings.length;
+  const confirmedBookings = bookings.filter(
+    (b) => b.Status === "Confirmed",
   ).length;
-  const pendingBookings = activeData.filter((b) => b.status === "Pending").length;
+  const pendingBookings = bookings.filter(
+    (b) => b.Status === "Pending",
+  ).length;
+
+  const cateringBookings = bookings.filter(b => b.bookingType === "catering");
+  const utensilBookings = bookings.filter(b => b.bookingType === "utensils");
+  console.log("caretingBooking",cateringBookings);
+  console.log("utensilsBooking",utensilBookings);
+
+
   return (
     <>
-     <h3 className="admin-title">Admin Dashboard</h3>
- <div className="stats">
+      <h3 className="admin-title">Admin Dashboard</h3>
+      <div className="stats">
         <div className="stat-card">
           <p className="stat-title">Total Bookings</p>
           <h2 className="stat-value">{totalBookings}</h2>
@@ -36,16 +73,14 @@ const AdminDashboard = () => {
         </div>
       </div>
 
-   
-    <Tabs activeTab={activeTab} setactiveTab={setactiveTab}/>
-    {activeTab==="catering" && (
-<BookingTable data={cateringBookings} type="catering"/>
-    )}
-    {activeTab==="utensils" && (
-  <BookingTable data={utensilBookings} type="utensils"/>
-
-    )}
-       <style>
+      <Tabs activeTab={activeTab} setactiveTab={setactiveTab} />
+      {activeTab === "catering" && (
+        <BookingTable data={cateringBookings} setbookings={setbookings} type="catering" />
+      )}
+      {activeTab === "utensils" && (
+        <BookingTable data={utensilBookings} setbookings={setbookings} type="utensils" />
+      )}
+      <style>
         {`
           .stats{
             display: grid;
@@ -82,10 +117,8 @@ const AdminDashboard = () => {
           }
         `}
       </style>
-    
-  
     </>
-  )
-}
+  );
+};
 
-export default AdminDashboard
+export default AdminDashboard;

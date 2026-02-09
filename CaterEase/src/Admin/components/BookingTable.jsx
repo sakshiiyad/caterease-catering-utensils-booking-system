@@ -1,6 +1,66 @@
-import React from "react";
+import React, { useEffect } from "react";
+import { getToken } from "../../utils/auth";
+import { useState } from "react";
 
-const BookingTable = ({ data, type }) => {
+const BookingTable = ({ data, type,setbookings }) => {
+  // const[bookings,setbookings]=useState(data)
+  const formatDate = (date) =>
+    new Date(date).toLocaleDateString("en-IN", {
+      day: "2-digit",
+      month: "short",
+      year: "numeric",
+    });
+
+    const token=getToken();
+   
+    async function statushandler(id,status){
+
+     setbookings(prev=>{
+       let updatedBookings=[];
+      for(let i=0;i<prev.length;i++){
+        let booking=prev[i];
+        if(booking._id===id){
+          updatedBookings.push({
+            ...booking,
+            Status:status
+          })
+        }
+        else{
+          updatedBookings.push(booking);
+
+        }
+      }
+        return updatedBookings;
+     })
+      
+    try{
+      const res=await fetch(`http://localhost:5000/api/admin/bookings/${id}/status`,{
+      method:"PATCH",
+      headers:{"content-Type":"application/json",
+       Authorization: `${token}`
+      },
+      body:JSON.stringify({
+        status
+      })
+    }
+      
+    )
+    const data=await res.json();
+    console.log("updated status",data);
+
+    }catch(error){
+      console.log("error updating status");
+
+    }
+  
+  }
+
+ 
+      
+      
+
+    
+
   return (
     <>
       <div className="table-wrap">
@@ -10,9 +70,7 @@ const BookingTable = ({ data, type }) => {
               <th>ID</th>
               <th>Customer</th>
               <th>Date</th>
-
               {type === "catering" ? <th>Guests</th> : <th>Items</th>}
-
               <th>Status</th>
               <th>Actions</th>
             </tr>
@@ -20,44 +78,47 @@ const BookingTable = ({ data, type }) => {
 
           <tbody>
             {data.map((booking) => (
-              <tr key={booking.id}>
-                <td>{booking.id}</td>
-                <td>{booking.customerName}</td>
-                <td>{booking.date}</td>
+              <tr key={booking._id}>
+                <td className="mono">{booking.bookingNumber}</td>
+                <td>{booking.user?.name}</td>
+                <td>{formatDate(booking.eventDate)}</td>
 
                 {type === "catering" ? (
-                  <td>{booking.guests}</td>
+                  <td>{booking.cateringDetails?.guests}</td>
                 ) : (
-                  <td>{booking.items}</td>
+                  <td>
+                    <div className="items-container">
+                      {booking.utensilsDetails?.items?.length > 0 ? (
+                        booking.utensilsDetails.items.map((item, index) => (
+                          <div key={index} className="item-card">
+                            <span className="item-name">{item.name}</span>
+                            <span className="item-meta">
+                              Qty {item.qty} · ₹{item.pricePerDay}/day
+                            </span>
+                          </div>
+                        ))
+                      ) : (
+                        <span className="muted">No items</span>
+                      )}
+                    </div>
+                  </td>
                 )}
 
                 <td>
-                  <span className={`status ${booking.status.toLowerCase()}`}>
-                    {booking.status}
+                  <span className={`status ${booking.Status.toLowerCase()}`}>
+                    {booking.Status}
                   </span>
                 </td>
 
-                <td className="actions">
-                  <button
-                    className="btn approve"
-                    onClick={() => alert(`Booking ${booking.id} Approved`)}
-                  >
-                    Approve
-                  </button>
-
-                  <button
-                    className="btn reject"
-                    onClick={() => alert(`Booking ${booking.id} Rejected`)}
-                  >
-                    Reject
-                  </button>
-
-                  <button
-                    className="btn done"
-                    onClick={() => alert(`Booking ${booking.id} Completed`)}
-                  >
-                    Completed
-                  </button>
+                <td>
+                  <div className="actions">
+                    <button onClick={()=>statushandler(booking._id,"Confirmed")}
+                    className="btn approve">Confirm</button>
+                    <button onClick={()=>statushandler(booking._id,"Rejected")}
+                    className="btn reject">Reject</button>
+                    <button onClick={()=>statushandler(booking._id,"Completed")}
+                    className="btn done">Completed</button>
+                  </div>
                 </td>
               </tr>
             ))}
@@ -65,97 +126,135 @@ const BookingTable = ({ data, type }) => {
         </table>
       </div>
 
-      <style>
-        {`
-          .table-wrap{
-            padding: 10px 20px;
-          }
+      <style>{`
+        .table-wrap {
+          padding: 16px;
+        }
 
-          .booking-table{
-            width: 100%;
-            border-collapse: collapse;
-            background: white;
-            border: 1px solid #e5e7eb;
-            border-radius: 12px;
-            overflow: hidden;
-          }
+        .booking-table {
+          width: 100%;
+          border-collapse: collapse;
+          background: white;
+          border: 1px solid #e5e7eb;
+          border-radius: 12px;
+          overflow: hidden;
+        }
 
-          .booking-table th, .booking-table td{
-            padding: 12px 14px;
-            text-align: left;
-            border-bottom: 1px solid #e5e7eb;
-            font-size: 14px;
-          }
+        .booking-table th,
+        .booking-table td {
+          padding: 14px;
+          text-align: left;
+          border-bottom: 1px solid #e5e7eb;
+          font-size: 14px;
+          vertical-align: top;
+        }
 
-          .booking-table th{
-            background: #f9fafb;
-            font-weight: 700;
-            color: #111827;
-          }
+        .booking-table th {
+          background: #f9fafb;
+          font-weight: 700;
+          color: #111827;
+        }
 
-          .booking-table tr:hover td{
-            background: #f8fafc;
-          }
+        .booking-table tr:hover td {
+          background: #f8fafc;
+        }
 
-          .actions{
-            display: flex;
-            gap: 8px;
-            flex-wrap: wrap;
-          }
+        .mono {
+          font-family: monospace;
+          font-size: 13px;
+          color: #374151;
+        }
 
-          .btn{
-            padding: 7px 12px;
-            border: none;
-            border-radius: 8px;
-            cursor: pointer;
-            font-size: 12px;
-            font-weight: 600;
-          }
+        /* Items */
+        .items-container {
+          display: flex;
+          flex-direction: column;
+          gap: 6px;
+        }
 
-          .btn.approve{
-            background: #16a34a;
-            color: white;
-          }
+        .item-card {
+          padding: 8px 10px;
+          border: 1px solid #e5e7eb;
+          border-radius: 8px;
+          background: #fafafa;
+        }
 
-          .btn.reject{
-            background: #dc2626;
-            color: white;
-          }
+        .item-name {
+          font-weight: 600;
+          display: block;
+          color: #111827;
+        }
 
-          .btn.done{
-            background: #111827;
-            color: white;
-          }
+        .item-meta {
+          font-size: 12px;
+          color: #6b7280;
+        }
 
-          .status{
-            padding: 6px 10px;
-            border-radius: 999px;
-            font-size: 12px;
-            font-weight: 700;
-            display: inline-block;
-          }
+        .muted {
+          color: #9ca3af;
+          font-size: 13px;
+        }
 
-          .status.pending{
-            background: #fef9c3;
-            color: #854d0e;
-          }
+        /* Status */
+        .status {
+          padding: 6px 12px;
+          border-radius: 999px;
+          font-size: 12px;
+          font-weight: 700;
+          display: inline-block;
+        }
 
-          .status.approved{
-            background: #dcfce7;
-            color: #166534;
-          }
+        .status.pending {
+          background: #fef9c3;
+          color: #854d0e;
+        }
 
-          .status.rejected{
-            background: #fee2e2;
-            color: #991b1b;
-          }
+        .status.approved {
+          background: #dcfce7;
+          color: #166534;
+        }
 
-          .status.completed{
-            background: #e5e7eb;
-            color: #111827;
-          }
-        `}
-      </style>
+        .status.rejected {
+          background: #fee2e2;
+          color: #991b1b;
+        }
+
+        .status.completed {
+          background: #e5e7eb;
+          color: #111827;
+        }
+
+        /* Actions */
+        .actions {
+          display: flex;
+          gap: 8px;
+          flex-wrap: wrap;
+        }
+
+        .btn {
+          padding: 7px 12px;
+          border: none;
+          border-radius: 8px;
+          cursor: pointer;
+          font-size: 12px;
+          font-weight: 600;
+        }
+
+        .btn.approve {
+          background: #16a34a;
+          color: white;
+        }
+
+        .btn.reject {
+          background: #dc2626;
+          color: white;
+        }
+
+        .btn.done {
+          background: #111827;
+          color: white;
+        }
+      `}</style>
     </>
   );
 };
