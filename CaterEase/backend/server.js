@@ -5,6 +5,7 @@ import connectDB from './src/config/db.js';
 import authRoutes from './src/routes/publicRoutes/authRoutes.js'
 import bookingRoute from './src/routes/privateRoutes/bookingRoutes.js'
 import adminRoute from './src/routes/privateRoutes/adminRoute.js';
+import inventoryRoute from './src/routes/privateRoutes/Inventory.js';
 
 dotenv.config();
 
@@ -22,6 +23,10 @@ app.use('/api',bookingRoute)
 
 //admin route inside private route
 app.use('/api',adminRoute);
+
+//admin inventory route
+
+app.use('/api',inventoryRoute);
 
 
 
