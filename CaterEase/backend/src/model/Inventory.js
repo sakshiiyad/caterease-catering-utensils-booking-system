@@ -3,6 +3,17 @@ import mongoose from "mongoose";
 const Schema=mongoose.Schema;
 
 const InventorySchema=new Schema({
+    InventoryId:{
+        type:String,
+        unique:true,
+      
+
+    },
+    Inventorytype:{
+        type:String,
+        enum:["utensils","catering"],
+        required:true,
+    },
     name:{
         type:String,
         required:true,
@@ -32,6 +43,13 @@ const InventorySchema=new Schema({
 {timestamps:true}
     
 );
+InventorySchema.pre("save",async function () {
+  if (!this.InventoryId) {
+    const rand = Math.floor(100 + Math.random() * 900);
+    this.InventoryId = `PI-${Date.now().toString().slice(-6)}${rand}`;
+  }
+ 
+});
 InventorySchema.pre("save",async function(){
     this.status=this.availableQuantity>0?"Available":"Out of stock";
    

@@ -1,8 +1,8 @@
 import InventoryModel from "../model/Inventory.js";
 export const addInventoryitem=async(req,res)=>{
     try{
-        const{name,totalQuantity,availableQuantity,unit}=req.body;
-        if(!name||!totalQuantity){
+        const{name,totalQuantity,availableQuantity,unit,Inventorytype}=req.body;
+        if(!name||!totalQuantity||!Inventorytype){
             return res.status(400).json({
                 success:false,
                 message:"Please provide all required fields"
@@ -13,6 +13,9 @@ export const addInventoryitem=async(req,res)=>{
             totalQuantity,
             availableQuantity:totalQuantity,
             unit,
+            Inventorytype
+            
+            
         })
         return res.status(201).json({
             success:true,
@@ -100,7 +103,7 @@ export const deleteInventoryQty=async(req,res)=>{
        
             return res.status(200).json({
                 success:true,
-                message:"Inventory quantity updated successfully",
+                message:"Inventory deleted successfully",
                 inventoryItem:item
             })  
         

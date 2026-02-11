@@ -1,6 +1,73 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import { getToken } from "../../utils/auth";
+import { toast } from "react-toastify";
 
-const InventoryTable = ({ data }) => {
+const InventoryTable = ({ data, setInventory }) => {
+
+console.log("areee momo",data);
+  const token=getToken();
+  const delethandler=async(id)=>{
+  try{
+      
+    const res=await fetch( `http://localhost:5000/api/inventory/${id}`,{
+      method:"DELETE",
+      headers:{"content-Type":"application/json",
+        Authorization:`${token}`,
+
+      },
+    })
+      const data=await res.json();
+      if(!data.success){
+        return toast.error("Something went wrong")
+      }
+       
+    setInventory(prev =>
+      prev.filter(item => item._id !== id)
+    );
+      return toast.success("Inventory deleted Successfully")
+
+  }catch(error){
+    console.log(error);
+    return toast.error("Server error")
+
+  }
+      
+    }
+
+
+// <-------handiing updation of qunatity----->
+  const updateQty=async(id,action)=>{
+    try{
+      const res=await fetch(`http://localhost:5000/api/inventory/${id}`,{
+        method:"PATCH",
+        headers:{"content-Type":"application/json",
+          Authorization:`${token}`
+        },
+        body:JSON.stringify({
+          action
+        })
+      })
+      const data=await res.json();
+      console.log(data)
+      setInventory(prev =>
+      prev.map(item =>
+        item._id === id ? data.inventoryItem : item
+      )
+    );
+
+    }catch(error){
+      console.log(error);
+    }
+
+  }
+  const updateOutofstockStatus=()=>{
+    
+  }
+
+
+
+
+
   return (
     <>
       <div className="inv-table-wrap">
@@ -10,6 +77,7 @@ const InventoryTable = ({ data }) => {
               <th>Id</th>
               <th>Name</th>
               <th>Quantity</th>
+              <th>AvailableQuantity</th>
               <th>Unit</th>
               <th>Status</th>
               <th colSpan={4} className="actions-head">Actions</th>
@@ -25,10 +93,11 @@ const InventoryTable = ({ data }) => {
               </tr>
             ) : (
               data.map((item) => (
-                <tr key={item.id}>
-                  <td>{item.id}</td>
+                <tr key={item._id}>
+                  <td>{item.InventoryId}</td>
                   <td className="item-name">{item.name}</td>
-                  <td>{item.quantity}</td>
+                  <td>{item.totalQuantity}</td>
+                  <td>{item.availableQuantity}</td>
                   <td>{item.unit}</td>
 
                   <td>
@@ -42,16 +111,21 @@ const InventoryTable = ({ data }) => {
                   </td>
 
                   <td>
-                    <button className="btn qty-btn">+</button>
+                    <button 
+                    onClick={()=>updateQty(item._id,"increase")}
+                    
+                    className="btn qty-btn">+</button>
                   </td>
                   <td>
-                    <button className="btn qty-btn">-</button>
+                    <button className="btn qty-btn"onClick={()=>updateQty(item._id,"decrease")}
+                    >-</button>
                   </td>
                   <td>
                     <button className="btn stock-btn">Out of Stock</button>
                   </td>
                   <td>
-                    <button className="btn del-btn">Delete</button>
+                    <button onClick={()=>delethandler(item._id)}
+                     className="btn del-btn">Delete</button>
                   </td>
                 </tr>
               ))

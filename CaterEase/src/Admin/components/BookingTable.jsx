@@ -55,12 +55,6 @@ const BookingTable = ({ data, type,setbookings }) => {
   
   }
 
- 
-      
-      
-
-    
-
   return (
     <>
       <div className="table-wrap">
