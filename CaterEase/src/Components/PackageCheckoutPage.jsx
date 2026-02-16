@@ -30,7 +30,7 @@ const priceperplate=state?.package.price||0;
 console.log(priceperplate)
 const guestscount=Number(formData.guests);
 const totalAmount=priceperplate*guestscount;
-const API_URL=`http://localhost:5000/api/bookings`;
+const API_URL=`/api/bookings`;
 const token=getToken();
 const handleSubmit=async(e)=>{
     e.preventDefault();

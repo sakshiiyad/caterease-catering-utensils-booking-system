@@ -60,7 +60,7 @@ const Inventory = () => {
   useEffect(() => {
   const renderInventory = async () => {
     try {
-      const res = await fetch(`http://localhost:5000/api/inventory`, {
+      const res = await fetch(`/api/inventory`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

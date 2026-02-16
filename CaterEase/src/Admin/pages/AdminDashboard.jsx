@@ -15,7 +15,7 @@ const AdminDashboard = () => {
   //API call to fetch Bookings
   useEffect(()=>{
     async function getAllbookings(){
-      const res=await fetch(`http://localhost:5000/api/admin/bookings`,{
+      const res=await fetch(`/api/admin/bookings`,{
         method:"GET",
         headers:{"content-Type":"application/json",
           Authorization:`${token}`

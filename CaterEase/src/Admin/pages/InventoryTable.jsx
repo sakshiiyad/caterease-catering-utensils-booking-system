@@ -68,7 +68,7 @@ console.log("areee momo",data);
   // <-----handling outofstock update----->
   const updateOUSstatus=async(id,currentStatus)=>{
      const action=currentStatus==="Available"?"outofstock":"makeAvailable";
-    const res=await fetch(`http://localhost:5000/api/inventory/${id}`,{
+    const res=await fetch(`/api/inventory/${id}`,{
       method:"PATCH",
       headers:{"content-Type":"application/json",
         Authorization:`${token}`,

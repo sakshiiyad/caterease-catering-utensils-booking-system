@@ -1,11 +1,11 @@
-/* Aboutus.css - Modern & Clean Design */
+
 
 .about {
   min-height: 100vh;
   background: #ffffff;
 }
 
-/* Hero Section - Reduced padding */
+
 .about-hero {
   background: linear-gradient(135deg, #010612 0%, #1a2332 100%);
   padding: 100px 20px 60px;
@@ -47,14 +47,14 @@
   line-height: 1.6;
 }
 
-/* Container - Reduced padding */
+
 .about-container {
   max-width: 1200px;
   margin: 0 auto;
   padding: 60px 20px;
 }
 
-/* Section Label */
+
 .section-label {
   display: inline-block;
   color: #885803;
@@ -65,7 +65,7 @@
   margin-bottom: 12px;
 }
 
-/* Story Section - Reduced margin */
+
 .story-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -119,7 +119,6 @@
   display: none;
 }
 
-/* Values Section - Reduced spacing */
 .values-section {
   text-align: center;
   margin-bottom: 80px;
@@ -270,7 +269,6 @@
   letter-spacing: 0.5px;
 }
 
-/* CTA Section - More compact */
 .cta-section {
   text-align: center;
   padding: 60px 40px;

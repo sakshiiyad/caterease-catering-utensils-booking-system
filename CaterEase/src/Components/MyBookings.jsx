@@ -10,7 +10,7 @@ const MyBookings = () => {
   const [bookings, setbookings] = useState([]);
   const [loading, setloading] = useState(false);
   
-  const API_URL = `http://localhost:5000/api/bookings/my`;
+  const API_URL = `/api/bookings/my`;
   const token = getToken();
 
   useEffect(() => {

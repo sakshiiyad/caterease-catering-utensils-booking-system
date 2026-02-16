@@ -8,7 +8,7 @@ import { useAuth } from "../context/AuthContext";
 const Signup = () => {
   const {login}=useAuth()
   const navigate = useNavigate();
-  const API_URL=`http://localhost:5000/auth/signup`;
+  const API_URL=`/auth/signup`;
 
   const [formData, setFormData] = useState({
     name: "",
@@ -35,7 +35,7 @@ const Signup = () => {
     }
     const response=await fetch(API_URL,{
       method:"POST",
-      headers:{"content-Type":"application/json"
+      headers:{"Content-Type":"application/json"
       },
       body:JSON.stringify({
         name:formData.name,

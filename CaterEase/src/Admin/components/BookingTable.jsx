@@ -34,7 +34,7 @@ const BookingTable = ({ data, type,setbookings }) => {
      })
       
     try{
-      const res=await fetch(`http://localhost:5000/api/admin/bookings/${id}/status`,{
+      const res=await fetch(`/api/admin/bookings/${id}/status`,{
       method:"PATCH",
       headers:{"content-Type":"application/json",
        Authorization: `${token}`
