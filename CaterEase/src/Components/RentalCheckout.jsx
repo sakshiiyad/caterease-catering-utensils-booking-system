@@ -5,8 +5,7 @@ import { getToken } from "../utils/auth";
 import { toast } from "react-toastify";
 
 const RentalCheckout = () => {
-  
-  const [form, setform] = useState({
+  const [form, setForm] = useState({
     eventDate: "",
     duration: 1,
     address: "",
@@ -15,216 +14,154 @@ const RentalCheckout = () => {
     delivery: "pickup",
     notes: "",
   });
-  const [loading, setloading] = useState(false)
+
+  const [loading, setLoading] = useState(false);
 
   const { state } = useLocation();
   const cart = state?.cart || [];
-  console.log("consoling log cart",cart)
-
   const navigate = useNavigate();
+  const token = getToken();
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-
-    setform({
-      ...form,
-      [name]: name === "duration" ? Number(value) : value,
-    });
+    setForm({ ...form, [name]: name === "duration" ? Number(value) : value });
   };
-const Token=getToken();
 
+  const handleConfirm = async (e) => {
+    e.preventDefault();
 
-  const handleConfirm =async (e) => {
-   try{
-      e.preventDefault();
-     if (cart.length === 0) {
-      alert("Cart is empty. Please add items first.");
+    if (cart.length === 0) {
+      toast.error("Cart is empty");
       navigate("/rent/cart");
       return;
     }
 
     if (!form.eventDate || !form.address || !form.name || !form.phone) {
-      alert("Please fill required fields");
+      toast.error("Please fill all required fields");
       return;
     }
-    setloading(true)
 
-    //API call
-    
-    const res=await fetch(`http://localhost:5000/api/bookings`,{
-      method:"POST",
-      headers:{"content-Type":"application/json",
-      Authorization:`${Token}`
-      },
-      body:JSON.stringify({
-        bookingType:"utensils",
-        eventDate:form.eventDate,
-        name:form.name,
-        phone:form.phone,
-        address:form.address,
-        delivery:form.delivery,
-        durationDays:form.duration,
-        items:state?.cart.map((item)=>({
-          name:item.name,
-          qty:item.qty,
-          pricePerDay:item.price
-        }))
-          
-        
-      })
+    try {
+      setLoading(true);
 
-  });
+      const res = await fetch("http://localhost:5000/api/bookings", {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          Authorization: token,
+        },
+        body: JSON.stringify({
+          bookingType: "utensils",
+          eventDate: form.eventDate,
+          totalPrice:cartTotal,
+          name: form.name,
+          phone: form.phone,
+          address: form.address,
+          delivery: form.delivery,
+          durationDays: form.duration,
+          items: cart.map((item) => ({
+            name: item.name,
+            qty: item.qty || item.quantity || 1,
+            pricePerDay: item.price,
+          })),
+        }),
+      });
 
-  const data=await res.json();
-  console.log(data);
-  if(!data.success){
-    toast.error("Something went wrong");
-    console.log(data.message);
-    return;
-    
-  }
-  toast.success("Booking created successfully");
-  navigate("/my-bookings");
-  
-    
-    
+      const data = await res.json();
 
-   }catch(error){
-    toast.error("Internal Server error")
+      if (!data.success) {
+        toast.error("Booking failed");
+        return;
+      }
 
-   }
-  }
-  // total price (if you have price in item)
-  const cartTotal = cart.reduce((sum, item) => {
-    const qty = item.qty || item.quantity || 1;
-    return sum + qty * (item.price || 0);
-  }, 0);
+      toast.success("Booking created successfully");
+      navigate("/my-bookings");
+    } catch {
+      toast.error("Internal Server Error");
+    } finally {
+      setLoading(false);
+    }
+  };
 
+  const cartTotal = cart.reduce(
+    (sum, item) =>
+      sum + (item.qty || item.quantity || 1) * (item.price || 0),
+    0
+  );
 
   return (
-    <div className="checkout-page">
-      <h2 className="title">Booking Details</h2>
+    <div className="rental-checkout">
+      <div className="rental-wrapper">
+        <h2 className="rental-heading">Booking Details</h2>
 
-      <div className="checkout-grid">
-        {/* LEFT: FORM */}
-        <div className="form-card">
-          <h3 className="section-title">Event + Contact Info</h3>
+        <div className="rental-layout">
+          {/* LEFT : FORM */}
+          <div className="rental-form-card">
+            <h3 className="card-heading">Event & Contact</h3>
 
-          <label className="label">
-            Event Date <span>*</span>
-          </label>
-          <input
-            type="date"
-            name="eventDate"
-            value={form.eventDate}
-            onChange={handleChange}
-          />
+            <label className="form-label">Event Date *</label>
+            <input type="date" name="eventDate" value={form.eventDate} onChange={handleChange} />
 
-          <label className="label">
-            Rental Duration (days) <span>*</span>
-          </label>
-          <input
-            type="number"
-            min="1"
-            name="duration"
-            value={form.duration}
-            onChange={handleChange}
-          />
+            <label className="form-label">Duration (days) *</label>
+            <input type="number" min="1" name="duration" value={form.duration} onChange={handleChange} />
 
-          <label className="label">
-            Event Address <span>*</span>
-          </label>
-          <input
-            type="text"
-            name="address"
-            placeholder="Enter full address"
-            value={form.address}
-            onChange={handleChange}
-          />
+            <label className="form-label">Event Address *</label>
+            <input type="text" name="address" placeholder="Full address" value={form.address} onChange={handleChange} />
 
-          <label className="label">
-            Name <span>*</span>
-          </label>
-          <input
-            type="text"
-            name="name"
-            placeholder="Your name"
-            value={form.name}
-            onChange={handleChange}
-          />
+            <label className="form-label">Name *</label>
+            <input type="text" name="name" placeholder="Your name" value={form.name} onChange={handleChange} />
 
-          <label className="label">
-            Phone <span>*</span>
-          </label>
-          <input
-            type="text"
-            name="phone"
-            placeholder="Phone number"
-            value={form.phone}
-            onChange={handleChange}
-          />
+            <label className="form-label">Phone *</label>
+            <input type="text" name="phone" placeholder="Phone number" value={form.phone} onChange={handleChange} />
 
-          <label className="label">Delivery Option</label>
-          <select name="delivery" value={form.delivery} onChange={handleChange}>
-            <option value="pickup">Self Pickup</option>
-            <option value="delivery">Home Delivery</option>
-          </select>
+            <label className="form-label">Delivery Mode</label>
+            <select name="delivery" value={form.delivery} onChange={handleChange}>
+              <option value="pickup">Self Pickup</option>
+              <option value="delivery">Home Delivery</option>
+            </select>
 
-          <label className="label">Notes</label>
-          <textarea
-            name="notes"
-            placeholder="Any special instructions?"
-            value={form.notes}
-            onChange={handleChange}
-          />
+            <label className="form-label">Notes</label>
+            <textarea
+              name="notes"
+              placeholder="Special instructions"
+              value={form.notes}
+              onChange={handleChange}
+            />
 
-          <button
-  className="confirm-btn"
-  onClick={handleConfirm}
-  disabled={loading}
->
-  {loading ? (
-    <span className="btn-loading">
-      <span className="spinner"></span>
-      Booking...
-    </span>
-  ) : (
-    "Confirm Rental Booking"
-  )}
-</button>
-
-        </div>
-
-        {/* RIGHT: SUMMARY */}
-        <div className="summary-card">
-          <h3 className="section-title">Order Summary</h3>
-
-          {cart.length === 0 ? (
-            <p className="empty">No items in cart.</p>
-          ) : (
-            cart.map((item) => (
-              <div className="summary-item" key={item.id}>
-                <div>
-                  <p className="item-name">{item.name}</p>
-                  <p className="item-sub">
-                    Qty: {item.qty || item.quantity || 1}
-                  </p>
-                </div>
-                <p className="item-price">₹{item.price || 0}</p>
-              </div>
-            ))
-          )}
-
-          <div className="divider"></div>
-
-          <div className="total-row">
-            <p>Total</p>
-            <p className="total-price">₹{cartTotal}</p>
+            <button className="submit-booking-btn" onClick={handleConfirm} disabled={loading}>
+              {loading ? "Booking..." : "Confirm Booking"}
+            </button>
           </div>
 
-          <p className="note">
-            ✅ Booking status will be <b>Pending</b> until confirmation.
-          </p>
+          {/* RIGHT : SUMMARY */}
+          <div className="rental-summary-card">
+            <h3 className="card-heading">Order Summary</h3>
+
+            {cart.length === 0 ? (
+              <p className="empty-cart">No items added.</p>
+            ) : (
+              cart.map((item) => (
+                <div className="summary-row" key={item.id}>
+                  <div>
+                    <p className="summary-name">{item.name}</p>
+                    <p className="summary-qty">Qty: {item.qty || item.quantity || 1}</p>
+                  </div>
+                  <p className="summary-price">₹{item.price}</p>
+                </div>
+              ))
+            )}
+
+            <div className="summary-divider"></div>
+
+            <div className="summary-total">
+              <span>Total</span>
+              <span className="total-amount">₹{cartTotal}</span>
+            </div>
+
+            <p className="summary-note">
+              ✔ Booking will remain <b>Pending</b> until approved.
+            </p>
+          </div>
         </div>
       </div>
     </div>

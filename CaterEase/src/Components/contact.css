@@ -1,97 +1,264 @@
+/* Contact.css - Complete Modern Design */
+
 .contact-page {
-  min-height: 90vh;
-  padding: 36px 20px 60px;
-  background: #f8fafc;
+  min-height: 100vh;
+  background: #fafbfc;
+  padding: 100px 20px 80px;
 }
 
-/* Header */
+/* ==================== HEADER SECTION ==================== */
 .contact-header {
   text-align: center;
-  margin-bottom: 26px;
+  max-width: 800px;
+  margin: 0 auto 70px;
+  padding: 0 20px;
+}
+
+.contact-label {
+  display: inline-block;
+  color: #885803;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
 }
 
 .contact-header h1 {
-  font-size: 30px;
+  font-size: clamp(2.5rem, 5vw, 3.5rem);
   font-weight: 800;
+  color: #1f2937;
+  margin-bottom: 20px;
+  letter-spacing: -1px;
 }
 
 .contact-header p {
+  font-size: clamp(1.0625rem, 2vw, 1.25rem);
   color: #6b7280;
-  margin-top: 6px;
+  line-height: 1.7;
 }
 
-/* Grid layout */
+/* ==================== CONTACT CONTAINER ==================== */
+.contact-container {
+  max-width: 1200px;
+  margin: 0 auto 90px;
+  padding: 0 20px;
+}
+
 .contact-grid {
-  max-width: 1000px;
-  margin: 0 auto;
   display: grid;
-  grid-template-columns: 2fr 1fr;
-  gap: 18px;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 48px;
+  align-items: start;
 }
 
-/* Cards */
-.contact-card,
-.info-card {
-  background: #ffffff;
-  border-radius: 14px;
-  padding: 18px 18px 20px;
-  border: 1px solid #e5e7eb;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.05);
+/* ==================== QUICK CONTACT SECTION ==================== */
+.quick-contact-section {
+  max-width: 1200px;
+  margin: 0 auto 80px;
+  padding: 0 20px;
 }
 
-.info-card p {
-  margin-top: 10px;
+.quick-contact-section h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: #1f2937;
+  margin-bottom: 48px;
+  font-weight: 700;
+  text-align: center;
 }
 
-/* Form */
-.contact-form {
+.quick-contact-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 28px;
+}
+
+.quick-contact-card {
+  background: white;
+  padding: 40px 32px;
+  border-radius: 20px;
+  text-align: center;
+  text-decoration: none;
+  border: 2px solid #f3f4f6;
+  transition: all 0.3s ease;
   display: flex;
   flex-direction: column;
-  gap: 10px;
+  align-items: center;
+  gap: 16px;
 }
 
-.contact-form input,
-.contact-form select,
-.contact-form textarea {
-  padding: 8px 10px;
-  border: 1px solid #d1d5db;
-  border-radius: 8px;
-  outline: none;
+.quick-contact-card:hover {
+  border-color: #c99d4e;
+  transform: translateY(-8px);
+  box-shadow: 0 16px 48px rgba(136, 88, 3, 0.15);
 }
 
-.contact-form input:focus,
-.contact-form textarea:focus {
-  border-color: #2563eb;
+.quick-icon {
+  width: 80px;
+  height: 80px;
+  background: linear-gradient(135deg, #c99d4e 0%, #a67c3b 100%);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 2.25rem;
+  box-shadow: 0 8px 24px rgba(136, 88, 3, 0.25);
+  transition: all 0.3s ease;
 }
 
-/* Button */
-.contact-btn {
-  margin-top: 4px;
-  padding: 9px 14px;
-  border-radius: 8px;
-  background: #2563eb;
-  color: #fff;
-  border: none;
+.quick-contact-card:hover .quick-icon {
+  transform: scale(1.1);
+  box-shadow: 0 12px 32px rgba(136, 88, 3, 0.35);
+}
+
+.quick-contact-card h3 {
+  font-size: 1.5rem;
+  color: #1f2937;
+  margin: 8px 0 4px;
+  font-weight: 700;
+}
+
+.quick-contact-card p {
+  font-size: 1.0625rem;
+  color: #6b7280;
+  margin: 0 0 8px;
+  line-height: 1.5;
+}
+
+.quick-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  color: #885803;
   font-weight: 600;
-  cursor: pointer;
+  font-size: 1rem;
+  transition: all 0.3s ease;
+  margin-top: 4px;
 }
 
-.success-box {
-  padding: 8px 10px;
-  margin-bottom: 10px;
-  border-radius: 6px;
-  background: #ecfdf5;
-  color: #065f46;
+.quick-contact-card:hover .quick-link {
+  gap: 8px;
 }
 
-.error {
-  font-size: 12px;
-  color: #dc2626;
+/* ==================== FAQ PREVIEW SECTION ==================== */
+.faq-preview {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #010612 0%, #1a2332 100%);
+  border-radius: 24px;
+  color: white;
 }
 
-/* Responsive */
-@media (max-width: 850px) {
+.faq-preview h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  text-align: center;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.faq-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 28px;
+}
+
+.faq-item {
+  background: rgba(255, 255, 255, 0.08);
+  backdrop-filter: blur(10px);
+  padding: 28px 24px;
+  border-radius: 16px;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  transition: all 0.3s ease;
+}
+
+.faq-item:hover {
+  background: rgba(255, 255, 255, 0.12);
+  border-color: rgba(206, 176, 122, 0.5);
+  transform: translateY(-4px);
+}
+
+.faq-item h3 {
+  font-size: 1.125rem;
+  color: #ceb07aed;
+  margin-bottom: 12px;
+  font-weight: 700;
+  line-height: 1.4;
+}
+
+.faq-item p {
+  font-size: 0.9375rem;
+  color: #cbd5e1;
+  line-height: 1.6;
+}
+
+
+/* ==================== RESPONSIVE DESIGN ==================== */
+@media (max-width: 968px) {
+  .contact-page {
+    padding: 80px 20px 60px;
+  }
+
   .contact-grid {
     grid-template-columns: 1fr;
+    gap: 32px;
+  }
+
+  .contact-container {
+    margin-bottom: 70px;
+  }
+
+  .quick-contact-section {
+    margin-bottom: 70px;
+  }
+
+  .quick-contact-grid {
+    grid-template-columns: 1fr;
+    gap: 24px;
+  }
+
+  .quick-contact-card {
+    padding: 36px 28px;
+  }
+
+  .faq-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
+  }
+
+  .faq-preview {
+    padding: 50px 24px;
+  }
+}
+
+@media (max-width: 640px) {
+  .contact-header {
+    margin-bottom: 50px;
+  }
+
+  .quick-contact-section h2 {
+    margin-bottom: 36px;
+  }
+
+  .quick-contact-card {
+    padding: 32px 24px;
+  }
+
+  .quick-icon {
+    width: 70px;
+    height: 70px;
+    font-size: 2rem;
+  }
+
+  .quick-contact-card h3 {
+    font-size: 1.375rem;
+  }
+
+  .faq-preview {
+    padding: 40px 20px;
+  }
+
+  .faq-preview h2 {
+    margin-bottom: 36px;
   }
 }

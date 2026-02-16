@@ -1,3 +1,5 @@
+import { toast } from "react-toastify";
+
 const TOKEN_KEY="token";
 const ROLE_KEY="role";
 
@@ -26,6 +28,7 @@ export const isLoggedIn=()=>{
 
 //clear auth details
 export const clearAuth=()=>{
+    toast.success("Logout successful")
     localStorage.removeItem(TOKEN_KEY);
     localStorage.removeItem(ROLE_KEY);
 }

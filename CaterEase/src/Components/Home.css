@@ -1,6 +1,8 @@
 /* full section with background image */
+
 .home {
-  min-height: 90vh;
+
+  min-height: calc(100vh - 75px);
   display: flex;
   justify-content: center;
   align-items: center;
@@ -13,14 +15,10 @@
 
   /* overlay for better text readability */
   position: relative;
+ 
 }
 
-.home::before {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: rgba(0, 0, 0, 0.45);
-}
+
 
 .hero {
   position: relative;
@@ -28,33 +26,61 @@
   max-width: 800px;
   text-align: center;
 }
-
 .title {
-  font-size: 28px;
+  font-size: 20px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 5px;
+  color: white !important;
+  opacity: 0.8;
+  
 }
+
 
 .subtitle {
-  font-size: 16px;
+  font-size: 15px;
   margin-bottom: 22px;
+  color: rgba(213, 205, 205, 0.982);
 }
 
-.primary-btn {
-  padding: 10px 22px;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
+.btn-custom {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 10px 24px;
+  font-size: 17px;
   font-weight: 600;
+  color: #000000;
+  background: #fcc48b;
+ 
+  border-radius: 12px;
+  gap: 8px;
+  text-decoration: none;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  position: relative;
+  overflow: visible;
+  z-index: 1;
+  font-family: inherit;
+  transform: translate3d(0, 0, 0);
+}
+.btn-custom svg,
+.btn-custom i {
+  font-size: 1.1em;
+  width: 1.1em;
+  height: 1.1em;
+}
+.btn-custom:hover {
+  opacity: 0.9;
+}
+.btn-custom:hover {
+  transform: scale(0.95);
 }
 .hero-box {
   max-width: 750px;
   text-align: center;
   color: #fff;
 
-  /* glassmorphism */
-  background: rgba(0, 0, 0, 0.35);
+  
   backdrop-filter: blur(10px);
   -webkit-backdrop-filter: blur(10px);
 
@@ -64,24 +90,10 @@
 
   box-shadow: 0 10px 25px rgba(0, 0, 0, 0.25);
 }
-
-.title {
+.hero-box .title {
   font-size: 28px;
   font-weight: 700;
-  margin-bottom: 12px;
+  margin-bottom: 10px;
+  color: white;
 }
 
-.subtitle {
-  font-size: 16px;
-  margin-bottom: 22px;
-}
-
-.primary-btn {
-  padding: 10px 22px;
-  border-radius: 6px;
-  background: #3b82f6;
-  color: #fff;
-  border: none;
-  font-weight: 600;
-  cursor: pointer;
-}

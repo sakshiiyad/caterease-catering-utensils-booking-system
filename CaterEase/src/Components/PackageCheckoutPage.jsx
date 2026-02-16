@@ -48,6 +48,7 @@ const handleSubmit=async(e)=>{
             body:JSON.stringify({
                 bookingType:"catering",
                 eventDate:formData.eventDate,
+                totalPrice:totalAmount,
                 packageName:state?.package.name,
                 guests:formData.guests
             })

@@ -25,7 +25,7 @@ export const updateStatus=async(req,res)=>{
     try{
         const {id}=req.params;
         const {status}=req.body;
-        if(!["Pending","Confirmed","Rejected"].includes(status)){
+        if(!["Pending","Confirmed","Rejected","Completed"].includes(status)){
             return res.status(400).json({  
                 success:false,
                 message:"Invalid status value. Status must be either Pending, Confirmed, or Rejected."

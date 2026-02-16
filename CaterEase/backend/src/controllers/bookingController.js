@@ -3,7 +3,7 @@ import bookingModel from "../model/Bookings.js";
 export const createBooking=async(req,res)=>{
     try{
         //extract the required fields
-        const {bookingType,eventDate}=req.body;
+        const {bookingType,eventDate,totalPrice}=req.body;
         //server side validation 
     if(!bookingType||!eventDate){
         return res.status(400).json({
@@ -18,7 +18,7 @@ export const createBooking=async(req,res)=>{
             bookingType,
             eventDate,
             status:"Pending",
-            totalPrice:0,
+            totalPrice:totalPrice,
         }
     
     //check bookingType and according to that add neccessary fields in base booking

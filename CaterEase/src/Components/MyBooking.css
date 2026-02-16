@@ -1,0 +1,93 @@
+/* ============================================
+   MY BOOKINGS PAGE STYLES
+   ============================================ */
+
+/* Page Container */
+.my-bookings-page {
+  min-height: 100vh;
+  background: #f8f9fa;
+  padding: 2rem 1rem;
+}
+
+/* Page Header Section */
+.my-bookings-header {
+  max-width: 1400px;
+  margin: 0 auto 2rem auto;
+  text-align: center;
+  padding: 0 2rem;
+}
+
+.my-bookings-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: #1a1a1a;
+  margin: 0 0 0.75rem 0;
+  letter-spacing: -0.02em;
+}
+
+.my-bookings-header p {
+  font-size: 1.125rem;
+  color: #6b7280;
+  margin: 0;
+  font-weight: 400;
+}
+
+/* Tabs Container */
+.my-bookings-tabs {
+  max-width: 1400px;
+  margin: 0 auto 2rem auto;
+  padding: 0 2rem;
+}
+
+/* Content Container */
+.my-bookings-content {
+  max-width: 1400px;
+  margin: 0 auto;
+  padding: 0 1rem;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+  .my-bookings-header,
+  .my-bookings-tabs {
+    padding: 0 1.5rem;
+  }
+
+  .my-bookings-header h1 {
+    font-size: 2rem;
+  }
+
+  .my-bookings-header p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .my-bookings-page {
+    padding: 1.5rem 0.5rem;
+  }
+
+  .my-bookings-header,
+  .my-bookings-tabs {
+    padding: 0 1rem;
+  }
+
+  .my-bookings-header h1 {
+    font-size: 1.75rem;
+    margin-bottom: 0.5rem;
+  }
+
+  .my-bookings-header p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 640px) {
+  .my-bookings-header h1 {
+    font-size: 1.5rem;
+  }
+
+  .my-bookings-header p {
+    font-size: 0.875rem;
+  }
+}

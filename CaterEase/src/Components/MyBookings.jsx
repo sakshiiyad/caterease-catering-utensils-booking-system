@@ -1,53 +1,84 @@
-import React, { useState,useEffect } from 'react'
-import Tabs from '../Admin/components/Tabs'
-import MyBookingTable from './MyBookingTable'
-
-
-import BookingTable from '../Admin/components/BookingTable'
-import { getToken } from '../utils/auth'
-import { toast } from 'react-toastify'
+import React, { useState, useEffect } from 'react';
+import Tabs from '../Admin/components/Tabs';
+import MyBookingTable from './MyBookingTable';
+import { getToken } from '../utils/auth';
+import { toast } from 'react-toastify';
+import './MyBooking.css';
 
 const MyBookings = () => {
-  const [activeTab, setactiveTab] = useState("catering")
-  const [bookings,setbookings]=useState([])
-  const [loading,setloading]=useState(false)
-  const API_URL=`http://localhost:5000/api/bookings/my`;
-  const token=getToken();
-  useEffect(()=>{
-   
-    const fetchbookings=async()=>{
-       const res=await fetch(API_URL,{
-      method:"GET",
-      headers:{"content-Type":"application/json",
-        Authorization:`${token}`
+  const [activeTab, setactiveTab] = useState("catering");
+  const [bookings, setbookings] = useState([]);
+  const [loading, setloading] = useState(false);
+  
+  const API_URL = `http://localhost:5000/api/bookings/my`;
+  const token = getToken();
 
-      },
-      
-    })
-    const data=await res.json();
-    console.log(data);
-    if(!data.success){
-     return toast.error("something went wrong")
-    }
-   setbookings(data.bookings);
-
-    }
+  useEffect(() => {
+    const fetchbookings = async () => {
+      try {
+        setloading(true);
+        const res = await fetch(API_URL, {
+          method: "GET",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `${token}`
+          },
+        });
+        
+        const data = await res.json();
+        console.log(data);
+        
+        if (!data.success) {
+          return toast.error("Something went wrong");
+        }
+        
+        setbookings(data.bookings);
+      } catch (error) {
+        toast.error("Failed to fetch bookings");
+      } finally {
+        setloading(false);
+      }
+    };
+    
     fetchbookings();
+  }, []);
 
-  },[])
-  let cateringBookings=bookings.filter(b=>b.bookingType==="catering")
-  let rentalBookings=bookings.filter(b=>b.bookingType==="utensils")
+  const cateringBookings = bookings.filter(b => b.bookingType === "catering");
+  const rentalBookings = bookings.filter(b => b.bookingType === "utensils");
+
   return (
-    <>
-    <h1>My Bookings</h1>
-    <p>Track your catering and utensil rental bookings here.</p>
-    <Tabs activeTab={activeTab} setactiveTab={setactiveTab}/>
-    {activeTab==="catering" && ( <MyBookingTable data={cateringBookings} type="catering"/>)}
-   
-    {activeTab==="utensils" &&(<MyBookingTable data={rentalBookings} type="utensils"/>)}
-   
-    </>
-  )
-}
+    <div className="my-bookings-page">
+      {/* Header Section */}
+      <div className="my-bookings-header">
+        <h1>My Bookings</h1>
+        <p>Track your catering and utensil rental bookings here.</p>
+      </div>
 
-export default MyBookings
+      {/* Tabs */}
+      <div className="my-bookings-tabs">
+        <Tabs activeTab={activeTab} setactiveTab={setactiveTab} />
+      </div>
+
+      {/* Content */}
+      <div className="my-bookings-content">
+        {loading ? (
+          <div style={{ textAlign: 'center', padding: '3rem', color: '#6b7280' }}>
+            Loading bookings...
+          </div>
+        ) : (
+          <>
+            {activeTab === "catering" && (
+              <MyBookingTable data={cateringBookings} type="catering" />
+            )}
+            
+            {activeTab === "utensils" && (
+              <MyBookingTable data={rentalBookings} type="utensils" />
+            )}
+          </>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export default MyBookings;

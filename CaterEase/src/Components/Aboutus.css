@@ -1,104 +1,375 @@
-/* Layout container */
+/* Aboutus.css - Modern & Clean Design */
+
 .about {
-  max-width: 1050px;
-  margin: 40px auto 70px;
-  padding: 0 18px;
-
-  /* THEME BACKGROUND */
-  background: linear-gradient(135deg, #c9c0ba 0%, #ebedee 100%);
-  border-radius: 20px;
-}
-
-/* Main header */
-.about-title {
-  text-align: center;
-  font-size: 36px;
-  font-weight: 800;
-  margin-bottom: 6px;
-}
-
-.about-sub {
-  text-align: center;
-  color: #6b7280;
-  margin-bottom: 28px;
-  font-size: 16px;
-}
-
-/* Section card style */
-.about-section {
+  min-height: 100vh;
   background: #ffffff;
-  border-radius: 18px;
-  padding: 20px 20px 22px;
-  margin-bottom: 22px;
-  box-shadow: 0 14px 28px rgba(0, 0, 0, 0.1);
-  border: 1px solid #e5e7eb;
 }
 
-.about-section h2 {
-  margin-bottom: 10px;
-  font-size: 20px;
+/* Hero Section - Reduced padding */
+.about-hero {
+  background: linear-gradient(135deg, #010612 0%, #1a2332 100%);
+  padding: 100px 20px 60px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
 }
 
-/* Bullet lists */
-.list {
-  margin-top: 12px;
-  line-height: 1.7;
-  padding-left: 14px;
+.about-hero::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: url('data:image/svg+xml,<svg width="100" height="100" xmlns="http://www.w3.org/2000/svg"><circle cx="50" cy="50" r="1" fill="rgba(255,255,255,0.1)"/></svg>');
+  opacity: 0.3;
 }
 
-.list li {
-  margin-bottom: 4px;
+.about-hero-content {
+  position: relative;
+  z-index: 1;
+  max-width: 800px;
+  margin: 0 auto;
 }
 
-/* Two-column grid */
-.about-grid {
+.about-title {
+  font-size: clamp(2.5rem, 5vw, 4rem);
+  font-weight: 800;
+  color: #ffffff;
+  margin-bottom: 16px;
+  letter-spacing: -1px;
+}
+
+.about-subtitle {
+  font-size: clamp(1.1rem, 2vw, 1.5rem);
+  color: #ceb07aed;
+  font-weight: 500;
+  line-height: 1.6;
+}
+
+/* Container - Reduced padding */
+.about-container {
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 60px 20px;
+}
+
+/* Section Label */
+.section-label {
+  display: inline-block;
+  color: #885803;
+  font-weight: 700;
+  font-size: 0.875rem;
+  text-transform: uppercase;
+  letter-spacing: 1.5px;
+  margin-bottom: 12px;
+}
+
+/* Story Section - Reduced margin */
+.story-section {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 16px;
-  margin: 20px 0;
+  gap: 50px;
+  align-items: center;
+  margin-bottom: 80px;
 }
 
-.about-grid > div {
-  background: white;
-  border-radius: 12px;
-  padding: 15px 15px 10px;
-  box-shadow: 0 12px 25px rgba(0, 0, 0, 0.08);
-  border: 1px solid #e5e7eb;
+.story-content h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: #1f2937;
+  margin-bottom: 20px;
+  line-height: 1.2;
+  font-weight: 700;
 }
 
-/* CTA box */
-.cta-box {
+.story-content p {
+  font-size: 1.0625rem;
+  color: #6b7280;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+.story-image {
+  position: relative;
+}
+
+.image-placeholder {
+  aspect-ratio: 4/3;
+  border-radius: 20px;
+  overflow: hidden;
+  position: relative;
+  box-shadow: 0 20px 60px rgba(136, 88, 3, 0.3);
+ 
+  transition: all 0.3s ease;
+}
+
+.image-placeholder:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 70px rgba(136, 88, 3, 0.4);
+}
+
+.image-placeholder img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+.image-placeholder span {
+  display: none;
+}
+
+/* Values Section - Reduced spacing */
+.values-section {
   text-align: center;
+  margin-bottom: 80px;
+}
+
+.values-section h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: #1f2937;
+  margin-bottom: 40px;
+  font-weight: 700;
+}
+
+.values-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  gap: 24px;
   margin-top: 32px;
-  padding: 20px;
+}
+
+.value-card {
+  background: #ffffff;
+  padding: 32px 24px;
   border-radius: 16px;
-  background: linear-gradient(135deg, #607d8b, #e0f2fe);
+  border: 2px solid #f3f4f6;
+  transition: all 0.3s ease;
+}
+
+.value-card:hover {
+  border-color: #885803;
+  transform: translateY(-5px);
+  box-shadow: 0 10px 30px rgba(136, 88, 3, 0.15);
+}
+
+.value-icon {
+  font-size: 2.5rem;
+  margin-bottom: 16px;
+}
+
+.value-card h3 {
+  font-size: 1.375rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.value-card p {
+  color: #6b7280;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+}
+
+/* How It Works Section - Reduced padding and spacing */
+.how-section {
+  text-align: center;
+  margin-bottom: 80px;
+  background: #f9fafb;
+  padding: 60px 40px;
+  border-radius: 24px;
+}
+
+.how-section h2 {
+  font-size: clamp(1.75rem, 4vw, 2.25rem);
+  color: #1f2937;
+  margin-bottom: 50px;
+  font-weight: 700;
+}
+
+.steps-container {
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+  max-width: 1000px;
+  margin: 0 auto;
+  gap: 16px;
+}
+
+.step {
+  flex: 1;
+  text-align: center;
+}
+
+.step-number {
+  width: 56px;
+  height: 56px;
+  background: #ceb07aed;
+  color: white;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0 auto 20px;
+  box-shadow: 0 4px 20px rgba(136, 88, 3, 0.3);
+}
+
+.step h3 {
+  font-size: 1.25rem;
+  color: #1f2937;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.step p {
+  color: #6b7280;
+  font-size: 0.9375rem;
+  line-height: 1.6;
+  padding: 0 8px;
+}
+
+.step-connector {
+  width: 50px;
+  height: 2px;
+  background: linear-gradient(to right, #ceb07aed, #d1d5db);
+  flex-shrink: 0;
+  margin-top: 28px;
+}
+
+/* Stats Section - More compact */
+.stats-section {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 32px;
+  margin-bottom: 80px;
+  padding: 50px 40px;
+  background: linear-gradient(135deg, #010612 0%, #1a2332 100%);
+  border-radius: 24px;
+  text-align: center;
+}
+
+.stat {
+  color: white;
+}
+
+.stat-number {
+  font-size: 3rem;
+  font-weight: 800;
+  color: #ceb07aed;
+  margin-bottom: 8px;
+  line-height: 1;
+}
+
+.stat-label {
+  font-size: 0.9375rem;
+  color: #9ca3af;
+  font-weight: 500;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* CTA Section - More compact */
+.cta-section {
+  text-align: center;
+  padding: 60px 40px;
+  background: linear-gradient(135deg, #c99d4e 0%, #a67c3b 100%);
+  border-radius: 24px;
+  color: white;
+}
+
+.cta-section h2 {
+  font-size: clamp(1.875rem, 4vw, 2.5rem);
+  margin-bottom: 12px;
+  font-weight: 800;
+}
+
+.cta-section p {
+  font-size: 1.125rem;
+  margin-bottom: 28px;
+  opacity: 0.95;
 }
 
 .cta-btn {
-  margin-top: 12px;
-  background: #2563eb;
-  color: #fff;
+  padding: 16px 40px;
+  background: white;
+  color: #885803;
   border: none;
-  padding: 10px 22px;
-  border-radius: 7px;
+  border-radius: 12px;
+  font-size: 1.0625rem;
+  font-weight: 700;
   cursor: pointer;
-  font-weight: 600;
-  transition: transform 0.2s ease, box-shadow 0.2s ease;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.15);
 }
 
 .cta-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 10px 18px rgba(37, 99, 235, 0.25);
+  box-shadow: 0 6px 30px rgba(0, 0, 0, 0.2);
 }
 
-/* Responsive */
-@media (max-width: 850px) {
-  .about-grid {
+
+/* Responsive Design */
+@media (max-width: 968px) {
+  .story-section {
     grid-template-columns: 1fr;
+    gap: 36px;
   }
 
-  .about-title {
-    font-size: 30px;
+  .steps-container {
+    flex-direction: column;
+    gap: 32px;
+  }
+
+  .step-connector {
+    width: 2px;
+    height: 32px;
+    background: linear-gradient(to bottom, #ceb07aed, #d1d5db);
+    margin-top: 0;
+  }
+
+  .about-container {
+    padding: 50px 20px;
+  }
+
+  .story-section,
+  .values-section,
+  .how-section {
+    margin-bottom: 60px;
+  }
+
+  .how-section {
+    padding: 50px 24px;
+  }
+
+  .stats-section {
+    padding: 40px 24px;
+    margin-bottom: 60px;
+  }
+}
+
+@media (max-width: 640px) {
+  .about-hero {
+    padding: 80px 20px 50px;
+  }
+
+  .stats-section {
+    grid-template-columns: repeat(2, 1fr);
+    gap: 24px;
+    padding: 36px 20px;
+  }
+
+  .stat-number {
+    font-size: 2.5rem;
+  }
+
+  .cta-section {
+    padding: 50px 24px;
+  }
+
+  .values-grid {
+    grid-template-columns: 1fr;
+    gap: 20px;
   }
 }

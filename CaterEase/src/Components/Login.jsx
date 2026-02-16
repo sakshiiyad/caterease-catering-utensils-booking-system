@@ -21,7 +21,7 @@ const Login = () => {
   };
   useEffect(()=>{
     if(isAuth){
-      navigate("/my-bookings");
+      navigate("/");
     }
 
   },[isAuth])
@@ -110,14 +110,14 @@ const Login = () => {
           </Link>
         </p>
 
-        <div style={styles.mockBox}>
+        {/* <div style={styles.mockBox}>
           <p style={{ margin: 0, fontSize: 13 }}>
-            ✅ Admin login: <b>admin@gmail.com</b>
+             Admin login: <b>admin@gmail.com</b>
           </p>
           <p style={{ margin: 0, fontSize: 13 }}>
             ✅ Customer login: <b>any other email</b>
           </p>
-        </div>
+        </div> */}
       </div>
     </div>
   );

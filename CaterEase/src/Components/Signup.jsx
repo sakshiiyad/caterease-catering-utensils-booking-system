@@ -54,7 +54,7 @@ const Signup = () => {
     const role=data.user.role
     setAuth({token,role})
     login(role)
-    navigate(role==="admin"?"/admin":"/my-bookings")
+    navigate(role==="admin"?"/admin":"/")
     console.log("token saved")
     }
     else{
@@ -158,12 +158,14 @@ const styles = {
     padding: 16,
   },
   card: {
+    margin:"80px",
     width: "100%",
     maxWidth: 460,
     background: "#fff",
     borderRadius: 14,
     padding: 24,
     boxShadow: "0 12px 30px rgba(0,0,0,0.08)",
+   
   },
   title: {
     margin: 0,

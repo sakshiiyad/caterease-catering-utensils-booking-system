@@ -38,6 +38,7 @@ console.log("areee momo",data);
 // <-------handiing updation of qunatity----->
   const updateQty=async(id,action)=>{
     try{
+     
       const res=await fetch(`http://localhost:5000/api/inventory/${id}`,{
         method:"PATCH",
         headers:{"content-Type":"application/json",
@@ -49,6 +50,9 @@ console.log("areee momo",data);
       })
       const data=await res.json();
       console.log(data)
+      if(!data.success){
+        return toast.error(data.message);
+      }
       setInventory(prev =>
       prev.map(item =>
         item._id === id ? data.inventoryItem : item
@@ -60,10 +64,28 @@ console.log("areee momo",data);
     }
 
   }
-  const updateOutofstockStatus=()=>{
-    
-  }
 
+  // <-----handling outofstock update----->
+  const updateOUSstatus=async(id,currentStatus)=>{
+     const action=currentStatus==="Available"?"outofstock":"makeAvailable";
+    const res=await fetch(`http://localhost:5000/api/inventory/${id}`,{
+      method:"PATCH",
+      headers:{"content-Type":"application/json",
+        Authorization:`${token}`,
+      },
+      body:JSON.stringify({
+        action
+      })
+
+    })
+    const data=await res.json();
+    console.log(data);
+    setInventory(prev =>
+      prev.map(item =>
+        item._id === id ? data.inventoryItem : item
+      ))
+  }
+  
 
 
 
@@ -121,7 +143,9 @@ console.log("areee momo",data);
                     >-</button>
                   </td>
                   <td>
-                    <button className="btn stock-btn">Out of Stock</button>
+                    <button className="btn stock-btn"
+                    onClick={()=>updateOUSstatus(item._id,item.status)}
+                    >{item.status==="Available"?"Out of Stock":"Available"}</button>
                   </td>
                   <td>
                     <button onClick={()=>delethandler(item._id)}

@@ -45,7 +45,7 @@ const bookingSchema=new Schema(
         },
         Status:{
             type:String,
-             enum: ["Pending", "Confirmed", "Rejected"],
+             enum: ["Pending", "Confirmed", "Rejected","Completed"],
              default:"Pending",
         },
         cateringDetails:{

@@ -39,18 +39,22 @@ const AdminDashboard = () => {
 
 
 
-  const totalBookings = bookings.length;
-  const confirmedBookings = bookings.filter(
-    (b) => b.Status === "Confirmed",
-  ).length;
-  const pendingBookings = bookings.filter(
-    (b) => b.Status === "Pending",
-  ).length;
+
 
   const cateringBookings = bookings.filter(b => b.bookingType === "catering");
   const utensilBookings = bookings.filter(b => b.bookingType === "utensils");
   console.log("caretingBooking",cateringBookings);
   console.log("utensilsBooking",utensilBookings);
+ 
+  const currentBookings=activeTab==="catering"?cateringBookings:utensilBookings;
+  const totalBookings=currentBookings.length;
+  const confirmedBookings=currentBookings.filter(b=>b.Status==="Confirmed").length;
+  const pendingBookings=currentBookings.filter(b=>b.Status==="Pending").length;
+
+
+  
+   
+ 
 
 
   return (
